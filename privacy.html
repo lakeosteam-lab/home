@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LakeOS Privacy Policy</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/transparent-lakeos-logo.png">
+    <script src="script.js"></script>
+</head>
+<body>
+<div id="announcement-wrapper" class="notification-bar" style="border:none; height:43px; width:100%; display:flex; align-items:center; justify-content:center; padding:0; overflow:hidden;"></div>
+<script>
+(function loadAnnouncement(){
+    const wrapper = document.getElementById('announcement-wrapper');
+    if(!wrapper) return;
+    const url = 'announcement.html?_=' + Date.now();
+    fetch(url).then(r=>r.text()).then(html=>{
+        const doc = new DOMParser().parseFromString(html,'text/html');
+        let cfg = {display:1, omit:[]};
+        const meta = doc.querySelector('meta[name="announce-config"]');
+        if (meta && meta.content) {
+            try { cfg = JSON.parse(meta.content); } catch(e) {}
+        } else {
+            const cfgScript = doc.getElementById('announce-config');
+            if (cfgScript) {
+                try { cfg = JSON.parse(cfgScript.textContent); } catch(e) {}
+            }
+        }
+        const page = (location.pathname.split('/').pop() || 'index.html');
+        const omit = Array.isArray(cfg.omit) ? cfg.omit : [];
+        if (String(cfg.display) === '0' || omit.indexOf(page) !== -1) {
+            wrapper.innerHTML = '';
+            wrapper.style.display = 'none';
+            return;
+        }
+        wrapper.style.display = 'flex';
+        wrapper.innerHTML = '<iframe src="announcement.html?_=' + Date.now() + '" style="border:none; height:43px; width:100%;"></iframe>';
+    }).catch(()=>{wrapper.innerHTML=''; wrapper.style.display='none';});
+    setTimeout(loadAnnouncement,5000);
+})();
+</script>
+<header class="lakeos-header">
+    <a href="index.html" class="logo-link">
+        <img src="assets/transparent-lakeos-logo.png" alt="LakeOS Logo" class="logo">
+        <span class="logo-text">LakeOS</span>
+    </a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav class="header-nav">
+        <a href="download.html">Download</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="credits.html">Credits</a>
+    </nav>
+</header>
+    <h1 id="title" class="default">Privacy Policy</h1>
+    <p class="default">Effective date: February 21, 2026</p>
+
+    <p class="default">LakeOS is designed to be simple, fast, and respectful of user privacy. We collect no personal data.</p>
+
+    <h2 class="default" id="presentation">1. Data Collection</h2>
+    <p class="default">LakeOS does not collect, store, transmit, or sell personal data. No accounts, no tracking, no telemetry, no device identifiers.</p>
+
+    <h2 class="default" id="presentation">2. Local System Data</h2>
+    <p class="default">Some local configuration files may be created to save your settings, but these stay on your device.</p>
+
+    <h2 class="default" id="presentation">3. Third-Party Components</h2>
+    <p class="default">LakeOS uses components from other open-source projects. Their privacy policies may apply:</p>
+    <ul class="default">
+        <li><a href="https://ubuntu.com/legal/privacy-policy" target="_blank">Ubuntu</a></li>
+        <li> <a href="https://kde.org/privacypolicy-apps/" target="_blank">KDE</a></li>
+    </ul>
+
+    <h2 class="default" id="presentation">4. Internet Connectivity</h2>
+    <p class="default">LakeOS does not contact external servers by default. Network activity only occurs when installing software, updating packages, or accessing online services.</p>
+
+    <h2 class="default" id="presentation">5. Children’s Privacy</h2>
+    <p class="default">LakeOS does not knowingly collect data from anyone, including minors.</p>
+
+    <h2 class="default" id="presentation">6. Changes to This Policy</h2>
+    <p class="default">This policy may be updated as LakeOS evolves. Continued use means acceptance of any changes.</p>
+
+    <h2 class="default" id="presentation">7. Contact</h2>
+    <p class="default">Project contact: <a href="mailto:lakeosteam@gmail.com">lakeosteam@gmail.com</a></p>
+</body>
+</html>

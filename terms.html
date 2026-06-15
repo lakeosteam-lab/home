@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LakeOS Terms of Use</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/transparent-lakeos-logo.png">
+</head>
+<body>
+<div id="announcement-wrapper" class="notification-bar" style="border:none; height:43px; width:100%; display:flex; align-items:center; justify-content:center; padding:0; overflow:hidden;"></div>
+<script>
+(function loadAnnouncement(){
+    const wrapper = document.getElementById('announcement-wrapper');
+    if(!wrapper) return;
+    const url = 'announcement.html?_=' + Date.now();
+    fetch(url).then(r=>r.text()).then(html=>{
+        const doc = new DOMParser().parseFromString(html,'text/html');
+        let cfg = {display:1, omit:[]};
+        const meta = doc.querySelector('meta[name="announce-config"]');
+        if (meta && meta.content) {
+            try { cfg = JSON.parse(meta.content); } catch(e) {}
+        } else {
+            const cfgScript = doc.getElementById('announce-config');
+            if (cfgScript) {
+                try { cfg = JSON.parse(cfgScript.textContent); } catch(e) {}
+            }
+        }
+        const page = (location.pathname.split('/').pop() || 'index.html');
+        const omit = Array.isArray(cfg.omit) ? cfg.omit : [];
+        if (String(cfg.display) === '0' || omit.indexOf(page) !== -1) {
+            wrapper.innerHTML = '';
+            wrapper.style.display = 'none';
+            return;
+        }
+        wrapper.style.display = 'flex';
+        wrapper.innerHTML = '<iframe src="announcement.html?_=' + Date.now() + '" style="border:none; height:43px; width:100%;"></iframe>';
+    }).catch(()=>{wrapper.innerHTML=''; wrapper.style.display='none';});
+    setTimeout(loadAnnouncement,5000);
+})();
+</script>
+<header class="lakeos-header">
+    <a href="index.html" class="logo-link">
+        <img src="assets/transparent-lakeos-logo.png" alt="LakeOS Logo" class="logo">
+        <span class="logo-text">LakeOS</span>
+    </a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <nav class="header-nav">
+        <a href="download.html">Download</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="credits.html">Credits</a>
+    </nav>
+</header>
+    <h1 id="title" class="default">Terms of Use</h1>
+    <p class="default">Effective date: February 21, 2026</p>
+
+    <p class="default">By using LakeOS, you agree to these Terms.</p>
+
+    <h2 class="default" id="presentation">1. Software Status</h2>
+    <p class="default">LakeOS is experimental software provided “as is.” Bugs, crashes, or incomplete features may occur. Use at your own risk.</p>
+
+    <h2 class="default" id="presentation">2. No Warranty</h2>
+    <p class="default">LakeOS is provided without any warranties, including reliability, fitness for a purpose, or data safety. Developers are not responsible for data loss or hardware issues.</p>
+
+    <h2 class="default" id="presentation">3. Acceptable Use</h2>
+    <p class="default">You agree not to misrepresent LakeOS, use it illegally, or claim official support where none exists. Normal use, learning, and modification are encouraged.</p>
+
+    <h2 class="default" id="presentation">4. Open Source Components</h2>
+    <p class="default">LakeOS includes open-source software licensed by their respective authors. Those licenses remain in effect.</p>
+
+    <h2 class="default" id="presentation">5. Updates and Changes</h2>
+    <p class="default">LakeOS may change, break, or disappear at any time without notice.</p>
+
+    <h2 class="default" id="presentation">6. Limitation of Liability</h2>
+    <p class="default">Developers are not liable for any damages resulting from use or inability to use the software.</p>
+
+    <h2 class="default" id="presentation">7. Humor Clause</h2>
+    <p class="default">LakeOS is created by humans with a sense of humor. Some text, features, or messages may not be entirely serious.</p>
+
+    <h2 class="default" id="presentation">8. Contact</h2>
+    <p class="default">Questions? <a href="mailto:lakeosteam@gmail.com">lakeosteam@gmail.com</a></p>
+</body>
+</html>

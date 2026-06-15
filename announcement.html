@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Configuration: set display to 0 to hide globally, 1 to show. Use "omit" to list filenames to hide on specific pages. -->
+    <meta name="announce-config" content='{"display":1,"omit":["ab1043.html","hr8250.html"]}'>
+    <title>Announcement Bar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 12px 20px;
+            overflow: hidden;
+            background-color: #8B0000;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        p { margin: 0; }
+        a, a:visited { color: white; text-decoration: underline; }
+        a:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <!-- Edit the text inside this <p> to change the announcement. Leave it empty to show nothing. -->
+    <p id="announcement">Hi (test banner) </p>
+
+    <!-- Optional inline JSON config for editors who prefer editing a script block -->
+    <script id="announce-config" type="application/json">{
+        "display": 1,
+        "omit": ["ab1043.html", "hr8250.html"]
+    }</script>
+</body>
+</html>
