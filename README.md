@@ -1,3 +1,3 @@
 LakeOS Website
 
-Its the website for the coolest OS ever!!!!
+This has been moved to lakeos-lab because of a 2FA complication which caused us to lose our LakeOS Official account.
